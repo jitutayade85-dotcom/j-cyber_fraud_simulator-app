@@ -1,0 +1,44 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Create Android scaffold
+        run: flutter create --platforms=android --org com.cep --project-name cyber_fraud_simulator .
+
+      - name: Apply Gradle config (desugaring + multidex)
+        run: |
+          rm -f android/app/build.gradle android/app/build.gradle.kts
+          cp android_app_build.gradle android/app/build.gradle
+
+      - name: Add permissions to Manifest
+        run: python3 configure_android.py
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: cyber-fraud-simulator-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
