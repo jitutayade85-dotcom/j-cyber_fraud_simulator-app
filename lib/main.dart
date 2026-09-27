@@ -16,7 +16,7 @@ void callbackDispatcher() {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Workmanager().init(callbackDispatcher);
+  await Workmanager().initialize(callbackDispatcher);
   await NotificationService.init(onTap: (payload) {
     final context = NotificationService.navigatorKey.currentContext;
     if (context == null || payload == null) return;
