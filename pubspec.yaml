@@ -4,13 +4,13 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.3.0 <4.0.0'
+  sdk: '>=3.5.0 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_local_notifications: ^17.2.2
-  workmanager: ^0.5.2
+  workmanager: ^0.10.10
   shared_preferences: ^2.2.3
   pdf: ^3.11.1
   printing: ^5.13.1
