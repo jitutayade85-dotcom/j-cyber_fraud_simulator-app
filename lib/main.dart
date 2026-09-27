@@ -32,7 +32,7 @@ void main() async {
     'cep_scam_alerts',
     'scamAlert',
     frequency: const Duration(minutes: 15),
-    existingWorkPolicy: ExistingWorkPolicy.keep,
+    existingWorkPolicy: ExistingPeriodicWorkPolicy.update,
   );
   runApp(const CyberSafeApp());
 }
