@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.cep.cybersafe"
+    namespace = "com.cep.cyber_fraud_simulator"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -20,7 +20,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.cep.cybersafe"
+        applicationId = "com.cep.cyber_fraud_simulator"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
