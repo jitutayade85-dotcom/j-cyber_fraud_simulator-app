@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../models/scam_scenario.dart';
 import 'dashboard_screen.dart';
@@ -15,13 +14,6 @@ class FeedbackScreen extends StatelessWidget {
     required this.reportedAsScam,
     required this.wasCorrect,
   });
-
-  Future<void> _dialHelpline() async {
-    final uri = Uri.parse('tel:1930');
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +92,6 @@ class FeedbackScreen extends StatelessWidget {
                     style: const TextStyle(color: Colors.white70, fontSize: 13, height: 1.4),
                   ),
                   const SizedBox(height: 14),
-                  // XP Tag
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                     decoration: BoxDecoration(
@@ -122,7 +113,7 @@ class FeedbackScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
-            // Red Flags Deep Dive Card
+            // Red Flags Breakdown Card
             Container(
               padding: const EdgeInsets.all(18),
               decoration: BoxDecoration(
@@ -138,7 +129,7 @@ class FeedbackScreen extends StatelessWidget {
                       Icon(Icons.flag_rounded, color: Colors.amber, size: 20),
                       SizedBox(width: 8),
                       Text(
-                        'CRITICAL RED FLAGS (Khatre Ke Nishan):',
+                        'CRITICAL RED FLAGS:',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 14,
@@ -172,7 +163,7 @@ class FeedbackScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Golden Rule / Safe Action
+            // Golden Defense Rule
             Container(
               padding: const EdgeInsets.all(18),
               decoration: BoxDecoration(
@@ -211,26 +202,32 @@ class FeedbackScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
 
-            // Emergency Helpline Action
-            OutlinedButton.icon(
-              style: OutlinedButton.styleFrom(
-                foregroundColor: Colors.amber,
-                side: const BorderSide(color: Colors.amber),
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            // Emergency Helpline Info Card
+            Container(
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                color: const Color(0xFF1E1A0E),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.amber.withOpacity(0.4)),
               ),
-              onPressed: _dialHelpline,
-              icon: const Icon(Icons.phone_in_talk, size: 20),
-              label: const Text(
-                'Report Real Scam: Call 1930 Cyber Helpline',
-                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+              child: const Row(
+                children: [
+                  Icon(Icons.phone_in_talk, color: Colors.amber, size: 24),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      'Asli fraud hone par turant 1930 Cyber Helpline par call karein ya cybercrime.gov.in par report karein.',
+                      style: TextStyle(color: Colors.amber, fontSize: 12, height: 1.3),
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 20),
 
-            // Back to HQ / Dashboard
+            // Back to Dashboard
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF2563EB),
