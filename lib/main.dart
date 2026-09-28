@@ -12,12 +12,8 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
     try {
-      final notif = NotificationService();
-      await notif.initialize();
-      await notif.showRandomScamAlert();
-    } catch (_) {
-      // Background task fail-safe
-    }
+      await NotificationService.showRandomScam();
+    } catch (_) {}
     return Future.value(true);
   });
 }
@@ -26,23 +22,23 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const CyberFraudApp());
 
-  // Background initialization after UI is rendered (prevents startup crash)
+  // Background initialization after UI renders safely
   Future.microtask(() async {
     try {
-      final notif = NotificationService();
-      await notif.initialize(onSelectNotification: (scenarioId) {
-        final scenario = kScenarios.firstWhere(
-          (s) => s.id == scenarioId,
-          orElse: () => kScenarios.first,
-        );
-        navigatorKey.currentState?.push(
-          MaterialPageRoute(
-            builder: (_) => SimulationScreen(scenario: scenario),
-          ),
-        );
-      });
+      await NotificationService.init(
+        onTap: (scenarioId) {
+          final scenario = kScenarios.firstWhere(
+            (s) => s.id == scenarioId,
+            orElse: () => kScenarios.first,
+          );
+          navigatorKey.currentState?.push(
+            MaterialPageRoute(
+              builder: (_) => SimulationScreen(scenario: scenario),
+            ),
+          );
+        },
+      );
 
-      // Register periodic simulation task
       await Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
       await Workmanager().registerPeriodicTask(
         'cyber_fraud_periodic_alert',
@@ -79,7 +75,6 @@ class CyberFraudApp extends StatelessWidget {
           primary: accentBlue,
           secondary: Color(0xFF10B981),
           surface: cardDark,
-          background: bgDark,
         ),
         appBarTheme: const AppBarTheme(
           backgroundColor: cardDark,
@@ -92,7 +87,6 @@ class CyberFraudApp extends StatelessWidget {
             letterSpacing: 1.2,
           ),
         ),
-        fontFamily: 'Roboto',
       ),
       home: const DashboardScreen(),
     );
