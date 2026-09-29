@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:workmanager/workmanager.dart';
 
+import 'app_theme.dart';
 import 'models/scam_scenario.dart';
 import 'screens/dashboard_screen.dart';
 import 'screens/simulation_screen.dart';
@@ -58,36 +59,11 @@ class CyberFraudApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const bgDark = Color(0xFF0B0F19);
-    const cardDark = Color(0xFF161F30);
-    const accentBlue = Color(0xFF2563EB);
-
     return MaterialApp(
       title: 'Cyber Command Simulator',
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: bgDark,
-        primaryColor: accentBlue,
-        cardColor: cardDark,
-        colorScheme: const ColorScheme.dark(
-          primary: accentBlue,
-          secondary: Color(0xFF10B981),
-          surface: cardDark,
-        ),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: cardDark,
-          elevation: 0,
-          centerTitle: true,
-          titleTextStyle: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w800,
-            fontSize: 16,
-            letterSpacing: 1.2,
-          ),
-        ),
-      ),
+      theme: AppTheme.dark,
       home: const DashboardScreen(),
     );
   }
