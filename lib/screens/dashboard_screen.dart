@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../app_theme.dart';
 import '../models/scam_scenario.dart';
 import '../services/certificate_service.dart';
 import '../services/notification_service.dart';
@@ -43,36 +44,37 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final total = kScenarios.length;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0A0F1D),
+      backgroundColor: AppColors.bg,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0F172A),
+        backgroundColor: AppColors.bg,
         elevation: 0,
         title: Row(
           children: [
             Container(
-              padding: const EdgeInsets.all(6),
+              padding: const EdgeInsets.all(7),
               decoration: BoxDecoration(
-                color: const Color(0xFF2563EB).withOpacity(0.2),
-                borderRadius: BorderRadius.circular(8),
+                color: AppColors.primary.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: AppColors.primary.withOpacity(0.3)),
               ),
-              child: const Icon(Icons.shield, color: Color(0xFF38BDF8), size: 20),
+              child: const Icon(Icons.shield_rounded, color: AppColors.primary, size: 20),
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: 12),
             const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'CYBER DEFENDER',
+                  'CYBER COMMAND',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                     fontSize: 15,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w800,
                     letterSpacing: 1.2,
                   ),
                 ),
                 Text(
-                  'CEP Problem #7 • Active Sentinel',
-                  style: TextStyle(color: Colors.white54, fontSize: 10),
+                  'Sentinel v2 • CEP Problem #7',
+                  style: TextStyle(color: AppColors.textSecondary, fontSize: 11),
                 ),
               ],
             ),
@@ -80,14 +82,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         actions: [
           IconButton(
-            tooltip: 'Simulate Notification',
-            icon: const Icon(Icons.notifications_active_outlined, color: Color(0xFF38BDF8)),
+            tooltip: 'Simulate Alert',
+            icon: const Icon(Icons.notifications_active_outlined, color: AppColors.secondary),
             onPressed: () {
               NotificationService.showRandomScam();
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Simulated Scam notification bhej di gayi hai!'),
-                  duration: Duration(seconds: 2),
+                SnackBar(
+                  backgroundColor: AppColors.surface,
+                  content: const Text(
+                    'Simulated scam alert dispatched!',
+                    style: TextStyle(color: AppColors.textPrimary),
+                  ),
+                  duration: const Duration(seconds: 2),
                 ),
               );
             },
@@ -97,25 +103,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          // 1. HERO PROGRESS CARD (SaaS Defense Ring & Stats)
-          Container(
+          // 1. HERO PROGRESS CARD (Lovable Dark SaaS Defense Ring)
+          SaaSCard(
             padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFF1E293B), Color(0xFF0F172A)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(24),
-              border: Border.all(color: const Color(0xFF334155)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.35),
-                  blurRadius: 18,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-            ),
             child: Row(
               children: [
                 // Circular Defense Ring
@@ -123,16 +113,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   alignment: Alignment.center,
                   children: [
                     SizedBox(
-                      width: 90,
-                      height: 90,
+                      width: 86,
+                      height: 86,
                       child: CircularProgressIndicator(
                         value: done.isEmpty ? 0.05 : (done.length / total),
-                        strokeWidth: 9,
-                        backgroundColor: const Color(0xFF334155),
+                        strokeWidth: 8,
+                        backgroundColor: AppColors.surfaceMuted,
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          _scorePercentage >= 70
-                              ? const Color(0xFF10B981)
-                              : const Color(0xFF38BDF8),
+                          _scorePercentage >= 70 ? AppColors.success : AppColors.secondary,
                         ),
                       ),
                     ),
@@ -140,19 +128,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          '${_scorePercentage.toInt()}%',
+                          '${_scorePercentage.toInt()}%\,
                           style: const TextStyle(
-                            color: Colors.white,
+                            color: AppColors.textPrimary,
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w800,
                           ),
                         ),
                         const Text(
                           'DEFENSE',
                           style: TextStyle(
-                            color: Colors.white60,
+                            color: AppColors.textSecondary,
                             fontSize: 9,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 0.5,
                           ),
                         ),
                       ],
@@ -166,11 +155,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'Cyber Health Index',
+                        'CYBER HEALTH INDEX',
                         style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w500,
+                          color: AppColors.textSecondary,
+                          fontSize: 11,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0.8,
                         ),
                       ),
                       const SizedBox(height: 6),
@@ -181,19 +171,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 ? '⚡ Silver Vigilant'
                                 : '⚠️ Vulnerable State'),
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: AppColors.textPrimary,
                           fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w800,
                         ),
                       ),
                       const SizedBox(height: 12),
                       Row(
                         children: [
-                          _buildMiniStat('Solved', '${done.length}/$total', const Color(0xFF38BDF8)),
+                          _buildMiniStat('Solved', '${done.length}/$total', AppColors.secondary),
                           const SizedBox(width: 14),
-                          _buildMiniStat('Shielded', '$correct', const Color(0xFF10B981)),
+                          _buildMiniStat('Shielded', '$correct', AppColors.success),
                           const SizedBox(width: 14),
-                          _buildMiniStat('Trapped', '$wrong', const Color(0xFFEF4444)),
+                          _buildMiniStat('Trapped', '$wrong', AppColors.danger),
                         ],
                       ),
                     ],
@@ -211,72 +201,68 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Text(
                 'LIVE SCAM RADAR (INDIA)',
                 style: TextStyle(
-                  color: Color(0xFF94A3B8),
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.1,
+                  color: AppColors.textSecondary,
+                  fontSize: 11.5,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 1.0,
                 ),
               ),
-              Text(
-                'UPDATED TODAY',
-                style: TextStyle(color: Color(0xFF38BDF8), fontSize: 11, fontWeight: FontWeight.bold),
-              ),
+              StatusPill(label: 'REAL-TIME', color: AppColors.secondary),
             ],
           ),
           const SizedBox(height: 12),
           SizedBox(
-            height: 125,
+            height: 130,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
                 _buildNewsCard(
-                  title: 'Digital Arrest Gang Seized',
-                  category: 'High Alert',
-                  description: 'Fraudsters pretending as CBI & FedEx on WhatsApp video calls.',
-                  color: const Color(0xFFDC2626),
+                  title: 'Digital Arrest Impersonation',
+                  category: 'Critical Alert',
+                  description: 'Scammers posing as CBI & FedEx on WhatsApp video calls.',
+                  color: AppColors.danger,
                 ),
                 _buildNewsCard(
-                  title: 'Fake Bijli Bill APK Alert',
-                  category: 'Malware',
-                  description: 'Disconnection SMS asking to download unverified .apk file.',
-                  color: const Color(0xFFF59E0B),
+                  title: 'Fake Bijli Bill APK',
+                  category: 'Malware APK',
+                  description: 'Urgent power cutoff SMS asking to download unverified APK.',
+                  color: AppColors.warning,
                 ),
                 _buildNewsCard(
-                  title: 'Telegram Rating Scam',
-                  category: 'Job Trap',
-                  description: 'Fake hotel reviews promising ₹3,500 daily profit.',
-                  color: const Color(0xFF8B5CF6),
+                  title: 'Telegram Task Job Scam',
+                  category: 'Investment Trap',
+                  description: 'Fake hotel & video reviews promising ₹3,500 daily return.',
+                  color: AppColors.primary,
                 ),
               ],
             ),
           ),
           const SizedBox(height: 24),
 
-          // 3. FRAUD DEFENSE BLOG & PROTOCOL
-          Container(
+          // 3. FRAUD DEFENSE PROTOCOL (TIP CARD)
+          SaaSCard(
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: const Color(0xFF131C2E),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: const Color(0xFF1E293B)),
-            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: const [
-                    Icon(Icons.lightbulb_outline, color: Color(0xFFFACC15), size: 20),
+                    Icon(Icons.tips_and_updates_rounded, color: AppColors.warning, size: 19),
                     SizedBox(width: 8),
                     Text(
-                      '30-Second Defense Tip: UPI Golden Rule',
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+                      'Golden Rule: UPI Never Requires PIN to Receive',
+                      style: TextStyle(
+                        color: AppColors.textPrimary,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 13.5,
+                      ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 8),
                 const Text(
-                  'UPI PIN sirf paise BHEJNE ke liye hota hai. Agar koi bole ki "Cashback lene ke liye PIN enter karo ya QR scan karo", toh wo 100% scam hai.',
-                  style: TextStyle(color: Color(0xFF94A3B8), fontSize: 13, height: 1.4),
+                  '''UPI PIN sirf aapke bank se paise TRANSFER karne ke liye hota hai. Agar koi sender bole ki "Cashback receive karne ke liye PIN dalo ya QR scan karo", toh wo 100% fraud hai.'',
+                  style: TextStyle(color: AppColors.textSecondary, fontSize: 13, height: 1.45),
                 ),
               ],
             ),
@@ -285,46 +271,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
           // 4. ACTIVE SIMULATION SCENARIOS
           const Text(
-            'ACTIVE SCENARIOS (TRAIN NOW)',
+            'ACTIVE TRAINING SCENARIOS',
             style: TextStyle(
-              color: Color(0xFF94A3B8),
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.1,
+              color: AppColors.textSecondary,
+              fontSize: 11.5,
+              fontWeight: FontWeight.w800,
+              letterSpacing: 1.0,
             ),
           ),
           const SizedBox(height: 12),
           ...kScenarios.map((s) {
             final isDone = done.contains(s.id);
-            return Container(
-              margin: const EdgeInsets.only(bottom: 10),
-              decoration: BoxDecoration(
-                color: const Color(0xFF131C2E),
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: isDone ? const Color(0xFF10B981).withOpacity(0.4) : const Color(0xFF1E293B),
-                ),
-              ),
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: isDone
-                      ? const Color(0xFF10B981).withOpacity(0.2)
-                      : const Color(0xFF334155),
-                  child: Icon(
-                    isDone ? Icons.check_circle : Icons.shield_outlined,
-                    color: isDone ? const Color(0xFF10B981) : Colors.white70,
-                    size: 20,
-                  ),
-                ),
-                title: Text(
-                  s.category,
-                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 15),
-                ),
-                subtitle: Text(
-                  s.sender,
-                  style: const TextStyle(color: Colors.white54, fontSize: 12),
-                ),
-                trailing: const Icon(Icons.arrow_forward_ios, color: Colors.white30, size: 14),
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: SaaSCard(
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                 onTap: () async {
                   await Navigator.push(
                     context,
@@ -334,64 +295,94 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   );
                   _load();
                 },
+                child: Row(
+                  children: [
+                    Container(
+                      width: 38,
+                      height: 38,
+                      decoration: BoxDecoration(
+                        color: isDone
+                            ? AppColors.success.withOpacity(0.12)
+                            : AppColors.surfaceMuted,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: isDone
+                              ? AppColors.success.withOpacity(0.3)
+                              : AppColors.border,
+                        ),
+                      ),
+                      child: Icon(
+                        isDone ? Icons.check_circle_rounded : Icons.shield_outlined,
+                        color: isDone ? AppColors.success : AppColors.textSecondary,
+                        size: 20,
+                      ),
+                    ),
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            s.category,
+                            style: const TextStyle(
+                              color: AppColors.textPrimary,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14.5,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            s.sender,
+                            style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Icon(Icons.chevron_right_rounded, color: AppColors.textMuted, size: 20),
+                  ],
+                ),
               ),
             );
           }),
           const SizedBox(height: 20),
 
           // 5. CEP VERIFIED CERTIFICATION
-          Container(
+          SaaSCard(
             padding: const EdgeInsets.all(18),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFF1E293B), Color(0xFF111827)],
-              ),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: _allDone ? const Color(0xFFF59E0B) : const Color(0xFF334155),
-              ),
-            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Row(
                   children: [
                     Icon(
-                      Icons.workspace_premium,
-                      color: _allDone ? const Color(0xFFF59E0B) : Colors.grey,
-                      size: 26,
+                      Icons.workspace_premium_rounded,
+                      color: _allDone ? AppColors.warning : AppColors.textMuted,
+                      size: 24,
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: 10),
                     const Text(
                       'CEP Verified Certificate',
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+                      style: TextStyle(
+                        color: AppColors.textPrimary,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 15.5,
+                      ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 14),
                 TextField(
                   controller: nameController,
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    hintText: 'Certificate ke liye apna full name enter karein',
-                    hintStyle: const TextStyle(color: Colors.white38, fontSize: 13),
-                    filled: true,
-                    fillColor: const Color(0xFF0A0F1D),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: Color(0xFF334155)),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: Color(0xFF334155)),
-                    ),
+                  style: const TextStyle(color: AppColors.textPrimary, fontSize: 14),
+                  decoration: const InputDecoration(
+                    hintText: 'Apna full name enter karein',
                   ),
                 ),
                 const SizedBox(height: 14),
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: _allDone ? const Color(0xFFF59E0B) : const Color(0xFF334155),
-                    foregroundColor: _allDone ? Colors.black : Colors.white54,
+                    backgroundColor: _allDone ? AppColors.primary : AppColors.surfaceMuted,
+                    foregroundColor: _allDone ? Colors.white : AppColors.textMuted,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
@@ -408,25 +399,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           );
                         }
                       : null,
-                  icon: const Icon(Icons.download),
+                  icon: const Icon(Icons.download_rounded, size: 19),
                   label: Text(
                     _allDone
                         ? 'Download Verified PDF Certificate'
                         : 'Pehle sabhi $total scenarios attempt karein',
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13.5),
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
           const Center(
             child: Text(
-              'National Cybercrime Helpline: 1930 | cybercrime.gov.in',
-              style: TextStyle(color: Colors.white38, fontSize: 11),
+              'National Cybercrime Helpline: 1930 • cybercrime.gov.in',
+              style: TextStyle(color: AppColors.textMuted, fontSize: 11),
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 16),
         ],
       ),
     );
@@ -436,9 +427,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(value, style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 15)),
+        Text(value, style: TextStyle(color: color, fontWeight: FontWeight.w800, fontSize: 15)),
         const SizedBox(height: 2),
-        Text(label, style: const TextStyle(color: Colors.white54, fontSize: 11)),
+        Text(label, style: const TextStyle(color: AppColors.textSecondary, fontSize: 11)),
       ],
     );
   }
@@ -454,41 +445,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
       margin: const EdgeInsets.only(right: 12),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: const Color(0xFF131C2E),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFF1E293B)),
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        border: Border.all(color: AppColors.border, width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                decoration: BoxDecoration(
-                  color: color.withOpacity(0.18),
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: Text(
-                  category.toUpperCase(),
-                  style: TextStyle(color: color, fontSize: 9, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          ),
+          StatusPill(label: category, color: color),
           const SizedBox(height: 8),
           Text(
             title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+            style: const TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.w700, fontSize: 13),
           ),
           const SizedBox(height: 4),
           Text(
             description,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(color: Colors.white54, fontSize: 11, height: 1.3),
+            style: const TextStyle(color: AppColors.textSecondary, fontSize: 11.5, height: 1.35),
           ),
         ],
       ),
