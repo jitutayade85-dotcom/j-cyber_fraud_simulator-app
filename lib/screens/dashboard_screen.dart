@@ -87,13 +87,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
             onPressed: () {
               NotificationService.showRandomScam();
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
+                const SnackBar(
                   backgroundColor: AppColors.surface,
-                  content: const Text(
+                  content: Text(
                     'Simulated scam alert dispatched!',
                     style: TextStyle(color: AppColors.textPrimary),
                   ),
-                  duration: const Duration(seconds: 2),
+                  duration: Duration(seconds: 2),
                 ),
               );
             },
@@ -128,7 +128,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          '${_scorePercentage.toInt()}%\,
+                          '${_scorePercentage.toInt()}%',
                           style: const TextStyle(
                             color: AppColors.textPrimary,
                             fontSize: 18,
@@ -240,13 +240,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
           const SizedBox(height: 24),
 
           // 3. FRAUD DEFENSE PROTOCOL (TIP CARD)
-          SaaSCard(
-            padding: const EdgeInsets.all(16),
+          const SaaSCard(
+            padding: EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  children: const [
+                  children: [
                     Icon(Icons.tips_and_updates_rounded, color: AppColors.warning, size: 19),
                     SizedBox(width: 8),
                     Text(
@@ -259,9 +259,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
-                const Text(
-                  '''UPI PIN sirf aapke bank se paise TRANSFER karne ke liye hota hai. Agar koi sender bole ki "Cashback receive karne ke liye PIN dalo ya QR scan karo", toh wo 100% fraud hai.'',
+                SizedBox(height: 8),
+                Text(
+                  'UPI PIN sirf aapke bank se paise TRANSFER karne ke liye hota hai. Agar koi sender bole ki "Cashback receive karne ke liye PIN dalo ya QR scan karo", toh wo 100% fraud hai.',
                   style: TextStyle(color: AppColors.textSecondary, fontSize: 13, height: 1.45),
                 ),
               ],
