@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
 
-/// Central design system for the app.
-/// Change a color or radius here and it updates everywhere.
+/// Lovable SaaS Design System for Cyber Fraud Simulator.
+/// Deep Slate, Electric Indigo, Neon Cyan & Sleek 1px Translucent Borders.
 class AppColors {
   AppColors._();
 
-  static const primary = Color(0xFF4F46E5); // Indigo — main brand color
-  static const primaryDark = Color(0xFF3730A3);
-  static const secondary = Color(0xFF0EA5E9); // Sky blue accent
-  static const success = Color(0xFF10B981); // Green — safe / correct
-  static const danger = Color(0xFFEF4444); // Red — scam / wrong
-  static const warning = Color(0xFFF59E0B); // Amber — caution / certificate
+  // Core Dark SaaS Background & Surfaces
+  static const bg = Color(0xFF0B0F19);           // Deep Obsidian
+  static const surface = Color(0xFF111827);      // Elevated Slate Card
+  static const surfaceMuted = Color(0xFF1E293B); // Nested Chip / Input Surface
+  static const border = Color(0x1AFFFFFF);       // 10% Opacity Crisp White Border
 
-  static const bg = Color(0xFFF7F8FC); // App background
-  static const surface = Color(0xFFFFFFFF); // Cards
-  static const surfaceMuted = Color(0xFFF1F3F9); // Nested/inner surfaces
-  static const border = Color(0xFFE5E7EB);
+  // Vibrant Accents
+  static const primary = Color(0xFF6366F1);      // Electric Indigo
+  static const primaryDark = Color(0xFF4F46E5);
+  static const secondary = Color(0xFF06B6D4);    // Cyan Tech Glow
+  static const success = Color(0xFF10B981);      // Emerald Green (Safe / Verified)
+  static const danger = Color(0xFFEF4444);       // Coral Red (Scam Alert)
+  static const warning = Color(0xFFF59E0B);      // Amber Warning
 
-  static const textPrimary = Color(0xFF111827);
-  static const textSecondary = Color(0xFF6B7280);
-  static const textMuted = Color(0xFF9CA3AF);
+  // Text Hierarchy
+  static const textPrimary = Color(0xFFF8FAFC);  // Crisp Off-White
+  static const textSecondary = Color(0xFF94A3B8);// Muted Slate
+  static const textMuted = Color(0xFF64748B);    // Dim Slate
 }
 
 class AppRadius {
@@ -29,39 +32,26 @@ class AppRadius {
   static const lg = 22.0;
 }
 
-class AppSpacing {
-  AppSpacing._();
-  static const xs = 4.0;
-  static const sm = 8.0;
-  static const md = 16.0;
-  static const lg = 24.0;
-  static const xl = 32.0;
-}
-
 class AppTheme {
   AppTheme._();
 
-  static ThemeData get light {
-    final base = ThemeData(
-      useMaterial3: true,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: AppColors.primary,
+  static ThemeData get dark {
+    final base = ThemeData.dark(useMaterial3: true);
+
+    return base.copyWith(
+      scaffoldBackgroundColor: AppColors.bg,
+      colorScheme: const ColorScheme.dark(
         primary: AppColors.primary,
         secondary: AppColors.secondary,
         surface: AppColors.surface,
-        brightness: Brightness.light,
+        error: AppColors.danger,
       ),
-      scaffoldBackgroundColor: AppColors.bg,
-      fontFamily: 'Roboto',
-    );
-
-    return base.copyWith(
       textTheme: base.textTheme.copyWith(
         headlineSmall: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w800,
           color: AppColors.textPrimary,
-          letterSpacing: -0.2,
+          letterSpacing: -0.3,
         ),
         titleMedium: const TextStyle(
           fontSize: 16,
@@ -72,10 +62,10 @@ class AppTheme {
           fontSize: 13,
           fontWeight: FontWeight.w700,
           color: AppColors.textSecondary,
-          letterSpacing: 0.4,
+          letterSpacing: 0.5,
         ),
         bodyLarge: const TextStyle(
-          fontSize: 15.5,
+          fontSize: 15,
           height: 1.45,
           color: AppColors.textPrimary,
         ),
@@ -89,12 +79,13 @@ class AppTheme {
         backgroundColor: AppColors.bg,
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
-        centerTitle: false,
+        centerTitle: true,
         scrolledUnderElevation: 0,
         titleTextStyle: TextStyle(
           color: AppColors.textPrimary,
-          fontSize: 17,
+          fontSize: 16,
           fontWeight: FontWeight.w800,
+          letterSpacing: 0.8,
         ),
       ),
       cardTheme: CardThemeData(
@@ -117,32 +108,21 @@ class AppTheme {
           textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14.5),
         ),
       ),
-      outlinedButtonTheme: OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.textPrimary,
-          side: const BorderSide(color: AppColors.border, width: 1.4),
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppRadius.sm),
-          ),
-          textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14.5),
-        ),
-      ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.surfaceMuted,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadius.sm),
-          borderSide: BorderSide.none,
+          borderSide: const BorderSide(color: AppColors.border),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadius.sm),
-          borderSide: BorderSide.none,
+          borderSide: const BorderSide(color: AppColors.border),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadius.sm),
-          borderSide: const BorderSide(color: AppColors.primary, width: 1.6),
+          borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
         ),
         hintStyle: const TextStyle(color: AppColors.textMuted, fontSize: 13.5),
       ),
@@ -151,16 +131,7 @@ class AppTheme {
   }
 }
 
-/// Reusable soft shadow for cards that need to feel "lifted" (hero/status cards).
-List<BoxShadow> softShadow({double opacity = 0.06}) => [
-      BoxShadow(
-        color: Colors.black.withOpacity(opacity),
-        blurRadius: 20,
-        offset: const Offset(0, 8),
-      ),
-    ];
-
-/// Small rounded status pill used across screens (e.g. "SCAM", "SAFE", category tags).
+/// Sleek Lovable-style status badge / pill
 class StatusPill extends StatelessWidget {
   final String label;
   final Color color;
@@ -175,17 +146,23 @@ class StatusPill extends StatelessWidget {
       decoration: BoxDecoration(
         color: color.withOpacity(0.12),
         borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: color.withOpacity(0.3), width: 1),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           if (icon != null) ...[
-            Icon(icon, size: 13, color: color),
-            const SizedBox(width: 4),
+            Icon(icon, size: 12, color: color),
+            const SizedBox(width: 5),
           ],
           Text(
-            label,
-            style: TextStyle(color: color, fontSize: 11.5, fontWeight: FontWeight.w700),
+            label.toUpperCase(),
+            style: TextStyle(
+              color: color,
+              fontSize: 11,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 0.5,
+            ),
           ),
         ],
       ),
@@ -193,9 +170,38 @@ class StatusPill extends StatelessWidget {
   }
 }
 
+/// Reusable Lovable-style container card with sleek border
+class SaaSCard extends StatelessWidget {
+  final Widget child;
+  final EdgeInsetsGeometry padding;
+  final VoidCallback? onTap;
 
+  const SaaSCard({
+    super.key,
+    required this.child,
+    this.padding = const EdgeInsets.all(16),
+    this.onTap,
+  });
 
+  @override
+  Widget build(BuildContext context) {
+    final content = Container(
+      padding: padding,
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        border: Border.all(color: AppColors.border, width: 1),
+      ),
+      child: child,
+    );
 
-
-
-
+    if (onTap != null) {
+      return InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        child: content,
+      );
+    }
+    return content;
+  }
+}
