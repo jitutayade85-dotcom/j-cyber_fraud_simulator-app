@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../app_theme.dart';
 import '../models/scam_scenario.dart';
 import 'dashboard_screen.dart';
 
@@ -17,23 +18,20 @@ class FeedbackScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const bgDark = Color(0xFF0B0F19);
-    const cardBg = Color(0xFF161F30);
-    const borderColor = Color(0xFF23314E);
-    final accentColor = wasCorrect ? const Color(0xFF10B981) : const Color(0xFFEF4444);
+    final accentColor = wasCorrect ? AppColors.success : AppColors.danger;
 
     return Scaffold(
-      backgroundColor: bgDark,
+      backgroundColor: AppColors.bg,
       appBar: AppBar(
-        backgroundColor: cardBg,
+        backgroundColor: AppColors.bg,
         elevation: 0,
         centerTitle: true,
         title: const Text(
           'THREAT DEBRIEF',
           style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w900,
-            fontSize: 16,
+            color: AppColors.textPrimary,
+            fontWeight: FontWeight.w800,
+            fontSize: 15,
             letterSpacing: 2.0,
           ),
         ),
@@ -47,16 +45,9 @@ class FeedbackScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
               decoration: BoxDecoration(
-                color: cardBg,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: accentColor.withOpacity(0.5), width: 1.5),
-                boxShadow: [
-                  BoxShadow(
-                    color: accentColor.withOpacity(0.15),
-                    blurRadius: 18,
-                    spreadRadius: 2,
-                  ),
-                ],
+                color: AppColors.surface,
+                borderRadius: BorderRadius.circular(AppRadius.lg),
+                border: Border.all(color: accentColor.withOpacity(0.4), width: 1),
               ),
               child: Column(
                 children: [
@@ -64,12 +55,12 @@ class FeedbackScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: accentColor.withOpacity(0.15),
+                      color: accentColor.withOpacity(0.12),
                     ),
                     child: Icon(
                       wasCorrect ? Icons.shield_rounded : Icons.warning_amber_rounded,
                       color: accentColor,
-                      size: 64,
+                      size: 60,
                     ),
                   ),
                   const SizedBox(height: 14),
@@ -78,9 +69,9 @@ class FeedbackScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: accentColor,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 1.2,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 1.0,
                     ),
                   ),
                   const SizedBox(height: 6),
@@ -89,24 +80,12 @@ class FeedbackScreen extends StatelessWidget {
                         ? 'Shabash! Aapne scam ke red flags ko bilkul sahi pehchana.'
                         : 'Aap is fraud trap me fas sakte the! Asli zindagi me dhyan dein.',
                     textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.white70, fontSize: 13, height: 1.4),
+                    style: const TextStyle(color: AppColors.textSecondary, fontSize: 13, height: 1.4),
                   ),
                   const SizedBox(height: 14),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: wasCorrect ? const Color(0xFF064E3B) : const Color(0xFF7F1D1D),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      wasCorrect ? '+25 DEFENSE XP' : '-15 XP (TRAP CLICKED)',
-                      style: TextStyle(
-                        color: wasCorrect ? const Color(0xFF6EE7B7) : const Color(0xFFFCA5A5),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        letterSpacing: 1,
-                      ),
-                    ),
+                  StatusPill(
+                    label: wasCorrect ? '+25 DEFENSE XP' : '-15 XP (TRAP CLICKED)',
+                    color: accentColor,
                   ),
                 ],
               ),
@@ -114,26 +93,21 @@ class FeedbackScreen extends StatelessWidget {
             const SizedBox(height: 20),
 
             // Red Flags Breakdown Card
-            Container(
+            SaaSCard(
               padding: const EdgeInsets.all(18),
-              decoration: BoxDecoration(
-                color: cardBg,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: borderColor),
-              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Row(
                     children: [
-                      Icon(Icons.flag_rounded, color: Colors.amber, size: 20),
+                      Icon(Icons.flag_rounded, color: AppColors.warning, size: 20),
                       SizedBox(width: 8),
                       Text(
                         'CRITICAL RED FLAGS:',
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
+                          color: AppColors.textPrimary,
+                          fontSize: 13.5,
+                          fontWeight: FontWeight.w800,
                         ),
                       ),
                     ],
@@ -149,7 +123,7 @@ class FeedbackScreen extends StatelessWidget {
                               child: Text(
                                 flag,
                                 style: const TextStyle(
-                                  color: Colors.white70,
+                                  color: AppColors.textSecondary,
                                   fontSize: 13,
                                   height: 1.4,
                                 ),
@@ -167,24 +141,24 @@ class FeedbackScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(18),
               decoration: BoxDecoration(
-                color: const Color(0xFF062826),
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: const Color(0xFF059669)),
+                color: AppColors.success.withOpacity(0.08),
+                borderRadius: BorderRadius.circular(AppRadius.md),
+                border: Border.all(color: AppColors.success.withOpacity(0.35)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Row(
                     children: [
-                      Icon(Icons.check_circle_rounded, color: Color(0xFF34D399), size: 20),
+                      Icon(Icons.check_circle_rounded, color: AppColors.success, size: 20),
                       SizedBox(width: 8),
                       Text(
                         'GOLDEN DEFENSE RULE:',
                         style: TextStyle(
-                          color: Color(0xFF34D399),
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1,
+                          color: AppColors.success,
+                          fontSize: 12.5,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 0.8,
                         ),
                       ),
                     ],
@@ -193,7 +167,7 @@ class FeedbackScreen extends StatelessWidget {
                   Text(
                     scenario.safeAction,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: AppColors.textPrimary,
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                       height: 1.4,
@@ -208,18 +182,18 @@ class FeedbackScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: const Color(0xFF1E1A0E),
+                color: AppColors.warning.withOpacity(0.08),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.amber.withOpacity(0.4)),
+                border: Border.all(color: AppColors.warning.withOpacity(0.35)),
               ),
               child: const Row(
                 children: [
-                  Icon(Icons.phone_in_talk, color: Colors.amber, size: 24),
+                  Icon(Icons.phone_in_talk_rounded, color: AppColors.warning, size: 24),
                   SizedBox(width: 12),
                   Expanded(
                     child: Text(
                       'Asli fraud hone par turant 1930 Cyber Helpline par call karein ya cybercrime.gov.in par report karein.',
-                      style: TextStyle(color: Colors.amber, fontSize: 12, height: 1.3),
+                      style: TextStyle(color: AppColors.warning, fontSize: 12, height: 1.3),
                     ),
                   ),
                 ],
@@ -230,11 +204,11 @@ class FeedbackScreen extends StatelessWidget {
             // Back to Dashboard
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF2563EB),
+                backgroundColor: AppColors.primary,
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                elevation: 4,
+                elevation: 0,
               ),
               onPressed: () => Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (_) => const DashboardScreen()),
@@ -244,7 +218,7 @@ class FeedbackScreen extends StatelessWidget {
                 'CONTINUE TO COMMAND HQ',
                 style: TextStyle(
                   fontSize: 14,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w800,
                   letterSpacing: 1.5,
                 ),
               ),
