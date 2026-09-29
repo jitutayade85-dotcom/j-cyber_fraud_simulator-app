@@ -103,12 +103,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          // 1. HERO PROGRESS CARD (Lovable Dark SaaS Defense Ring)
+          // 1. HERO PROGRESS CARD (Circular Ring & Stats)
           SaaSCard(
             padding: const EdgeInsets.all(20),
             child: Row(
               children: [
-                // Circular Defense Ring
                 Stack(
                   alignment: Alignment.center,
                   children: [
@@ -149,7 +148,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ],
                 ),
                 const SizedBox(width: 20),
-                // Stats Summary
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -192,9 +190,59 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ],
             ),
           ),
+          const SizedBox(height: 20),
+
+          // 2. 7-DAY DEFENSE ACTIVITY GRAPH (SMOOTH TELEMETRY BARS)
+          SaaSCard(
+            padding: const EdgeInsets.all(18),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Row(
+                      children: [
+                        Icon(Icons.insights_rounded, color: AppColors.secondary, size: 18),
+                        SizedBox(width: 8),
+                        Text(
+                          '7-DAY DEFENSE VELOCITY',
+                          style: TextStyle(
+                            color: AppColors.textPrimary,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 0.8,
+                          ),
+                        ),
+                      ],
+                    ),
+                    StatusPill(
+                      label: '${done.length} ATTEMPTS',
+                      color: AppColors.primary,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 18),
+                _build7DayChart(),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text('Mon', style: TextStyle(color: AppColors.textMuted, fontSize: 11)),
+                    Text('Tue', style: TextStyle(color: AppColors.textMuted, fontSize: 11)),
+                    Text('Wed', style: TextStyle(color: AppColors.textMuted, fontSize: 11)),
+                    Text('Thu', style: TextStyle(color: AppColors.textMuted, fontSize: 11)),
+                    Text('Fri', style: TextStyle(color: AppColors.textMuted, fontSize: 11)),
+                    Text('Sat', style: TextStyle(color: AppColors.textMuted, fontSize: 11)),
+                    Text('Today', style: TextStyle(color: AppColors.secondary, fontWeight: FontWeight.bold, fontSize: 11)),
+                  ],
+                ),
+              ],
+            ),
+          ),
           const SizedBox(height: 24),
 
-          // 2. LIVE SCAM RADAR (TRENDING NEWS)
+          // 3. LIVE SCAM RADAR (TRENDING NEWS)
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
@@ -233,36 +281,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   category: 'Investment Trap',
                   description: 'Fake hotel & video reviews promising ₹3,500 daily return.',
                   color: AppColors.primary,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 24),
-
-          // 3. FRAUD DEFENSE PROTOCOL (TIP CARD)
-          const SaaSCard(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.tips_and_updates_rounded, color: AppColors.warning, size: 19),
-                    SizedBox(width: 8),
-                    Text(
-                      'Golden Rule: UPI Never Requires PIN to Receive',
-                      style: TextStyle(
-                        color: AppColors.textPrimary,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 13.5,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 8),
-                Text(
-                  'UPI PIN sirf aapke bank se paise TRANSFER karne ke liye hota hai. Agar koi sender bole ki "Cashback receive karne ke liye PIN dalo ya QR scan karo", toh wo 100% fraud hai.',
-                  style: TextStyle(color: AppColors.textSecondary, fontSize: 13, height: 1.45),
                 ),
               ],
             ),
@@ -419,6 +437,59 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           const SizedBox(height: 16),
         ],
+      ),
+    );
+  }
+
+  Widget _build7DayChart() {
+    // 7 days simulated activity with actual current score for today
+    final activityHeights = [0.35, 0.55, 0.40, 0.70, 0.60, 0.85, (done.isEmpty ? 0.2 : (done.length / kScenarios.length)).clamp(0.2, 1.0)];
+
+    return SizedBox(
+      height: 70,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: List.generate(7, (i) {
+          final isToday = i == 6;
+          final heightFactor = activityHeights[i];
+
+          return Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    height: 60 * heightFactor,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: isToday
+                            ? [AppColors.secondary, AppColors.primary]
+                            : [AppColors.surfaceMuted, AppColors.surfaceMuted.withOpacity(0.8)],
+                      ),
+                      borderRadius: BorderRadius.circular(6),
+                      border: isToday
+                          ? Border.all(color: AppColors.secondary.withOpacity(0.6), width: 1.2)
+                          : null,
+                      boxShadow: isToday
+                          ? [
+                              BoxShadow(
+                                color: AppColors.secondary.withOpacity(0.3),
+                                blurRadius: 8,
+                                offset: const Offset(0, 2),
+                              )
+                            ]
+                          : null,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }),
       ),
     );
   }
